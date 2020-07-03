@@ -43,6 +43,23 @@ module.exports = {
         }
 
     },
+    updateUser: async(req, res) => {
+        try {
+            const id = req.params.id
+            const name = req.body.name
+            const email = req.body.email
+            const address = req.body.address
+            db.query(`UPDATE users SET name='${name}',email='${email}',address='${address}' WHERE id='${id}'`, (err, result) => {
+                if(err){
+                    response(res, false, null, 'internal server error', 501, null)
+                }
+                response(res, true, result, 'insert user success', 200, null)
+            })
+        } catch (error) {
+            response(res, false, null, 'internal server error', 500, null)
+        }
+
+    },
     deleteUser: async(req, res) => {
         try {
             const id = req.params.id
